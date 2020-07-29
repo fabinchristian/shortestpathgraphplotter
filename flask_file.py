@@ -6,8 +6,8 @@ import os
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 
-from shortestpathgraphplotter import constants
-from shortestpathgraphplotter.shortest_path import QuickWayFinder
+from shortestflaskplotter import constants
+from shortestflaskplotter.shortest_path import QuickWayFinder
 
 app = Flask(__name__)
 
