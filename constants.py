@@ -6,7 +6,7 @@ import os
 
 UPLOAD = "UPLOAD_FOLDER"
 IMAGE = "IMAGE_FOLDER"
-UPLOAD_FOLDER = '/Users/fabin/shortestpathgraphplotter'
+UPLOAD_FOLDER = os.path.join('static', 'Images')
 IMAGE_FOLDER = os.path.join('static', 'Images')
 POST = "POST"
 GET = "GET"

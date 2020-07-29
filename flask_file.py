@@ -11,6 +11,10 @@ from shortestpathgraphplotter.shortest_path import QuickWayFinder
 
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+    return render_template("flask.html")
+
 
 @app.route('/json_uploader', methods=[constants.GET, constants.POST])
 def upload_file():
@@ -19,6 +23,7 @@ def upload_file():
 
     :return: HTML Report
     """
+
     app.config[constants.UPLOAD] = constants.UPLOAD_FOLDER
     app.config[constants.IMAGE] = constants.IMAGE_FOLDER
     if request.method == constants.POST:
@@ -36,4 +41,4 @@ def upload_file():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5000)
