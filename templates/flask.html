@@ -3,6 +3,10 @@
    <body>
       <form action = "http://localhost:5000/json_uploader" method = "POST"
          enctype = "multipart/form-data">
+         <label>Start Node:</label>
+         <input type="text" name="start_node"><br><br>
+         <label>Target Node:</label>
+         <input type="text" name="target_node"><br><br>
          <input type = "file" name = "file" />
          <input type = "submit"/>
       </form>

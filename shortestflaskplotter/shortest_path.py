@@ -82,6 +82,7 @@ class QuickWayFinder(object):
         traversed_path = self.get_the_quickest_path()
         # Drawing of coordinates
         mydrawing = traversed_path.split('-> ')
+        print([int(self.node_coordinates[n.rstrip()][0]) for n in mydrawing])
         plt.plot([int(self.node_coordinates[n.rstrip()][0]) for n in mydrawing],
                  [int(self.node_coordinates[n.rstrip()][1]) for n in mydrawing], color="red")
         self.plt = plt
@@ -117,4 +118,3 @@ class QuickWayFinder(object):
         trav.reverse()
         trav.append(target)
         return " -> ".join(trav), dist[target]
-
