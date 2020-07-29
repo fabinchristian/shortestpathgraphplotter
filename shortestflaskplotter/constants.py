@@ -18,3 +18,4 @@ INVALID_FIELDS_IN_JSON = f"The expected fields in the JSON are {VALID_JSON_FIELD
 NO_FILE_FOUND = "No File Selected"
 START_NODE_END_NODE_INVALID = "The start node or end node provided is incorrect."
 JSON_PATH_PROVIDED_IS_NOT_VALID = "The data provided in the input json file is not as expected."
+NO_PATH_EXISTS_BETWEEN_NODE = "There are no connected path between start and end nodes."

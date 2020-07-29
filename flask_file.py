@@ -54,15 +54,16 @@ def validate_json_path(filename, request):
         msg = constants.INVALID_START_END_NODE
     elif filename and not allowed_file(filename):
         msg = constants.INVALID_TYPE
-    absolute_file_path = os.path.join(app.config[constants.UPLOAD], filename)
-    success_validate, json_dump = validate_json(absolute_file_path)
-    if not success_validate:
-        msg = constants.INVALID_JSON_FILE
-    elif set(json_dump.keys()) != set(constants.VALID_JSON_FIELD):
-        msg = constants.INVALID_FIELDS_IN_JSON
-    elif (request.form['start_node'] not in list(json_dump['node_names'].values())) or (
-            request.form['target_node'] not in list(json_dump['node_names'].values())):
-        msg = constants.START_NODE_END_NODE_INVALID
+    if not msg:
+        absolute_file_path = os.path.join(app.config[constants.UPLOAD], filename)
+        success_validate, json_dump = validate_json(absolute_file_path)
+        if not success_validate:
+            msg = constants.INVALID_JSON_FILE
+        elif set(json_dump.keys()) != set(constants.VALID_JSON_FIELD):
+            msg = constants.INVALID_FIELDS_IN_JSON
+        elif (request.form['start_node'] not in list(json_dump['node_names'].values())) or (
+                request.form['target_node'] not in list(json_dump['node_names'].values())):
+            msg = constants.START_NODE_END_NODE_INVALID
     return msg
 
 
@@ -90,6 +91,8 @@ def upload_file():
             absolute_file_path = os.path.join(app.config[constants.UPLOAD], filename)
             f.save(absolute_file_path)
             quick_way_finder = QuickWayFinder(request.form['start_node'], request.form['target_node'], absolute_file_path)
+            if not quick_way_finder.traversed_path:
+                return constants.NO_PATH_EXISTS_BETWEEN_NODE
             plotter_image_path = os.path.join(app.config[constants.IMAGE], 'plotter.jpg')
             if os.path.exists(plotter_image_path):
                 os.remove(plotter_image_path)
@@ -97,6 +100,7 @@ def upload_file():
             shortest_path = f"The path traversed is {quick_way_finder.traversed_path} and total distance is {quick_way_finder.distance}"
             return render_template("index.html", user_image=plotter_image_path, header_info=shortest_path)
         except Exception as e:
+            print("The exception occurred ={}".format(str(e)))
             return constants.JSON_PATH_PROVIDED_IS_NOT_VALID
 
 if __name__ == '__main__':

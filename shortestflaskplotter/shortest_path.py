@@ -26,6 +26,7 @@ class QuickWayFinder(object):
         self.traversed_path = None
         self.distance = None
         self.plt = None
+        self.path_exists = False
         self.process_json()
         self.prepare_coordinates()
         self.highlight_the_shortest_path()
@@ -58,7 +59,9 @@ class QuickWayFinder(object):
         for i in range(len(self.node_names)):
             for j in range(len(self.node_names)):
                 if self.weights_node_coordinates[i][j]:
-                    plt.plot([xCoord[i], xCoord[j]], [yCoord[i], yCoord[j]], 'b')
+                    plt.annotate(f'\n{self.weights_node_coordinates[i][j]}\n', xy=((xCoord[i]+xCoord[j])/2, (yCoord[i]+yCoord[j])/2),
+                                 fontsize= "small")
+                    plt.plot([xCoord[i], xCoord[j]], [yCoord[i], yCoord[j]], color='blue')
 
     def get_the_quickest_path(self):
         """
@@ -69,8 +72,6 @@ class QuickWayFinder(object):
         traversed_path, distance = self.find_shortest_path(self.node_paths, self.node1, self.node2)
         self.traversed_path = traversed_path
         self.distance = distance
-        print(f"The traversed path is {traversed_path}")
-        print(f"The total weight along the traversed path {distance}")
         return traversed_path
 
     def highlight_the_shortest_path(self):
@@ -80,9 +81,10 @@ class QuickWayFinder(object):
         :return: None
         """
         traversed_path = self.get_the_quickest_path()
+        if traversed_path:
+            self.path_exists = True
         # Drawing of coordinates
         mydrawing = traversed_path.split('-> ')
-        print([int(self.node_coordinates[n.rstrip()][0]) for n in mydrawing])
         plt.plot([int(self.node_coordinates[n.rstrip()][0]) for n in mydrawing],
                  [int(self.node_coordinates[n.rstrip()][1]) for n in mydrawing], color="red")
         self.plt = plt
