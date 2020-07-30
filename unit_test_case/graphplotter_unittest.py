@@ -5,10 +5,8 @@ This module validates handles unit test cases for the Shortest Path Graph Plotte
 import json
 import os
 import unittest
-
 import flask_file
 from shortestflaskplotter.shortest_path import QuickWayFinder
-
 
 class TestShortPathGraphPlotter(unittest.TestCase):
 
@@ -86,6 +84,3 @@ class TestShortPathGraphPlotter(unittest.TestCase):
         os.remove('invalid.txt')
         os.remove("router.json")
 
-
-if __name__ == '__main__':
-    unittest.main()

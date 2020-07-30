@@ -70,11 +70,11 @@ class QuickWayFinder(object):
         yCoord = [self.node_coordinates[k][1] for k in sorted(self.node_coordinates)]
         plt.plot(xCoord, yCoord, 'bo')
         x_max, x_min, y_max, y_min = self.get_plotter_coordinates()
-        plt.axis([x_max, x_min, y_max, y_min])
+        plt.axis([x_min-1, x_max+1, y_min-1, y_max+1])
         plt.xlabel('X Coordinate of Node', fontsize=16)
         plt.ylabel('Y Coordinate of Node', fontsize=16)
         for i in range(len(self.node_names)):
-            plt.text(xCoord[i] - 0.1, yCoord[i] - 0.1, self.node_names[str(i + 1)])
+            plt.text(xCoord[i] - 0.3, yCoord[i] - 0.3, self.node_names[str(i + 1)])
         for i in range(len(self.node_names)):
             for j in range(len(self.node_names)):
                 if self.weights_node_coordinates[i][j]:

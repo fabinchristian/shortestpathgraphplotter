@@ -101,7 +101,7 @@ def upload_file():
             quick_way_finder.plt.savefig(plotter_image_path)
             shortest_path = f"The path traversed is {quick_way_finder.traversed_path} and total distance is {quick_way_finder.distance}"
             return render_template("index.html", user_image=plotter_image_path, header_info=shortest_path)
-        except Exception:
+        except Exception as e:
             return constants.JSON_PATH_PROVIDED_IS_NOT_VALID
 
 
