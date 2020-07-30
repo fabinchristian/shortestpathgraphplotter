@@ -53,7 +53,7 @@ class QuickWayFinder(object):
         xCoord = [self.node_coordinates[k][0] for k in sorted(self.node_coordinates)]
         yCoord = [self.node_coordinates[k][1] for k in sorted(self.node_coordinates)]
         plt.plot(xCoord, yCoord, 'bo')
-        x_max, x_min, y_max, y_min = self .get_plotter_coordinates()
+        x_max, x_min, y_max, y_min = self.get_plotter_coordinates()
         plt.axis([x_max, x_min, y_max, y_min])
         plt.xlabel('X Coordinate of Node', fontsize=16)
         plt.ylabel('Y Coordinate of Node', fontsize=16)
@@ -62,8 +62,9 @@ class QuickWayFinder(object):
         for i in range(len(self.node_names)):
             for j in range(len(self.node_names)):
                 if self.weights_node_coordinates[i][j]:
-                    plt.annotate(f'{self.weights_node_coordinates[i][j]}\n', xy=((xCoord[i]+xCoord[j])/2, (yCoord[i]+yCoord[j])/2),
-                                 fontsize= "medium")
+                    plt.annotate(f'{self.weights_node_coordinates[i][j]}\n',
+                                 xy=((xCoord[i] + xCoord[j]) / 2, (yCoord[i] + yCoord[j]) / 2),
+                                 fontsize="medium")
                     plt.plot([xCoord[i], xCoord[j]], [yCoord[i], yCoord[j]], color='blue')
 
     def get_plotter_coordinates(self):
@@ -78,14 +79,14 @@ class QuickWayFinder(object):
         y_min = 0
         nodes_coords = self.node_coordinates.values()
         for coord in nodes_coords:
-          if coord[0] > x_max:
-              x_max = coord[0]
-          if coord[0] < x_min:
-              x_min = coord[0]
-          if coord[1] > y_max:
-              y_max = coord[1]
-          if coord[1] < y_min:
-              y_min = coord[1]
+            if coord[0] > x_max:
+                x_max = coord[0]
+            if coord[0] < x_min:
+                x_min = coord[0]
+            if coord[1] > y_max:
+                y_max = coord[1]
+            if coord[1] < y_min:
+                y_min = coord[1]
         return x_max, x_min, y_max, y_min
 
     def get_the_quickest_path(self):
@@ -108,6 +109,8 @@ class QuickWayFinder(object):
         traversed_path = self.get_the_quickest_path()
         if traversed_path:
             self.path_exists = True
+        else:
+            return
         # Drawing of coordinates
         mydrawing = traversed_path.split('-> ')
         plt.plot([int(self.node_coordinates[n.rstrip()][0]) for n in mydrawing],
@@ -123,6 +126,7 @@ class QuickWayFinder(object):
         :param target: Destination Node
         :return: traversed node and distance calculated.
         """
+
         inf = reduce(lambda x, y: x + y, (i[1] for u in graph for i in graph[u]))
         dist = dict.fromkeys(graph, inf)
         prev = dict.fromkeys(graph)
@@ -136,10 +140,11 @@ class QuickWayFinder(object):
                 if alt < dist[v]:
                     dist[v] = alt
                     prev[v] = u
-
+        if target not in prev:
+            return None, None
         trav = []
         temp = target
-        while temp != start:
+        while temp != start and target:
             trav.append(prev[temp])
             temp = prev[temp]
         trav.reverse()

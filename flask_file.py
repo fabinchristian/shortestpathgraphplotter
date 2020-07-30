@@ -5,9 +5,10 @@ import json
 import os
 
 from flask import Flask, render_template, request
+from werkzeug.utils import secure_filename
+
 from shortestflaskplotter import constants
 from shortestflaskplotter.shortest_path import QuickWayFinder
-from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -90,7 +91,8 @@ def upload_file():
         try:
             absolute_file_path = os.path.join(app.config[constants.UPLOAD], filename)
             f.save(absolute_file_path)
-            quick_way_finder = QuickWayFinder(request.form['start_node'], request.form['target_node'], absolute_file_path)
+            quick_way_finder = QuickWayFinder(request.form['start_node'], request.form['target_node'],
+                                              absolute_file_path)
             if not quick_way_finder.traversed_path:
                 return constants.NO_PATH_EXISTS_BETWEEN_NODE
             plotter_image_path = os.path.join(app.config[constants.IMAGE], 'plotter.jpg')
@@ -99,9 +101,9 @@ def upload_file():
             quick_way_finder.plt.savefig(plotter_image_path)
             shortest_path = f"The path traversed is {quick_way_finder.traversed_path} and total distance is {quick_way_finder.distance}"
             return render_template("index.html", user_image=plotter_image_path, header_info=shortest_path)
-        except Exception as e:
-            print("The exception occurred ={}".format(str(e)))
+        except Exception:
             return constants.JSON_PATH_PROVIDED_IS_NOT_VALID
+
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)
