@@ -50,20 +50,43 @@ class QuickWayFinder(object):
 
         :return: None
         """
-        xCoord = [int(self.node_coordinates[k][0]) for k in sorted(self.node_coordinates)]
-        yCoord = [int(self.node_coordinates[k][1]) for k in sorted(self.node_coordinates)]
+        xCoord = [self.node_coordinates[k][0] for k in sorted(self.node_coordinates)]
+        yCoord = [self.node_coordinates[k][1] for k in sorted(self.node_coordinates)]
         plt.plot(xCoord, yCoord, 'bo')
-        plt.axis([-1, 7, -1, 9])
-        plt.xlabel('X Coordinate of Node', fontsize=18)
+        x_max, x_min, y_max, y_min = self .get_plotter_coordinates()
+        plt.axis([x_max, x_min, y_max, y_min])
+        plt.xlabel('X Coordinate of Node', fontsize=16)
         plt.ylabel('Y Coordinate of Node', fontsize=16)
         for i in range(len(self.node_names)):
-            plt.text(xCoord[i] - 0.5, yCoord[i], self.node_names[str(i + 1)])
+            plt.text(xCoord[i] - 0.1, yCoord[i] - 0.1, self.node_names[str(i + 1)])
         for i in range(len(self.node_names)):
             for j in range(len(self.node_names)):
                 if self.weights_node_coordinates[i][j]:
-                    plt.annotate(f'\n{self.weights_node_coordinates[i][j]}\n', xy=((xCoord[i]+xCoord[j])/2, (yCoord[i]+yCoord[j])/2),
-                                 fontsize= "small")
+                    plt.annotate(f'{self.weights_node_coordinates[i][j]}\n', xy=((xCoord[i]+xCoord[j])/2, (yCoord[i]+yCoord[j])/2),
+                                 fontsize= "medium")
                     plt.plot([xCoord[i], xCoord[j]], [yCoord[i], yCoord[j]], color='blue')
+
+    def get_plotter_coordinates(self):
+        """
+        This method finds the max and min X and Y coordinates.
+
+        :return: x and y min,max coordinates
+        """
+        x_max = 0
+        y_max = 0
+        x_min = 0
+        y_min = 0
+        nodes_coords = self.node_coordinates.values()
+        for coord in nodes_coords:
+          if coord[0] > x_max:
+              x_max = coord[0]
+          if coord[0] < x_min:
+              x_min = coord[0]
+          if coord[1] > y_max:
+              y_max = coord[1]
+          if coord[1] < y_min:
+              y_min = coord[1]
+        return x_max, x_min, y_max, y_min
 
     def get_the_quickest_path(self):
         """
