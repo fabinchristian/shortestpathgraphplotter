@@ -54,6 +54,8 @@ class QuickWayFinder(object):
         yCoord = [int(self.node_coordinates[k][1]) for k in sorted(self.node_coordinates)]
         plt.plot(xCoord, yCoord, 'bo')
         plt.axis([-1, 7, -1, 9])
+        plt.xlabel('X Coordinate of Node', fontsize=18)
+        plt.ylabel('Y Coordinate of Node', fontsize=16)
         for i in range(len(self.node_names)):
             plt.text(xCoord[i] - 0.5, yCoord[i], self.node_names[str(i + 1)])
         for i in range(len(self.node_names)):
