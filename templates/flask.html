@@ -1,15 +1,26 @@
 <!-- This is the request HTML Page-->
 <html>
-   <body>
-      <form action = "http://localhost:5000/json_uploader" method = "POST"
-         enctype = "multipart/form-data">
-         <center><p>Shotest Path Graph Plotter</p></center>
-         <label>Start Node:</label>
-         <input type="text" name="start_node"><br><br>
-         <label>Target Node:</label>
-         <input type="text" name="target_node"><br><br>
-         <input type = "file" name = "file" />
-         <input type = "submit"/>
-      </form>
-   </body>
+<head>
+    <title>Shotest Path Graph Plotter</title>
+
+    <script type="text/javascript">
+      function preventBack(){window.history.forward();}
+      setTimeout("preventBack()", 0);
+      window.onunload=function(){null};
+
+    </script>
+
+</head>
+<body>
+<form action="http://localhost:5000/json_uploader" enctype="multipart/form-data"
+      method="POST">
+    <center><p><b>Shotest Path Graph Plotter</b></p></center>
+    <label>Start Node:</label>
+    <input name="start_node" type="text"><br><br>
+    <label>Target Node:</label>
+    <input name="target_node" type="text"><br><br>
+    <input name="file" type="file"/>
+    <input type="submit"/>
+</form>
+</body>
 </html>

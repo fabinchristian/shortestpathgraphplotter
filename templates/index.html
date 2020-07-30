@@ -2,10 +2,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Index</title>
+    <title>Shotest Path Graph Plotter</title>
+
+    <script type="text/javascript">
+   function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+
+    </script>
+
 </head>
 <body>
-    <img src="{{ user_image }}" alt="User Image">
-    <p>{{ header_info }}</p>
+<center><p><b>Shotest Path Graph Plotter</b></p></center>
+<img alt="User Image" src="{{ user_image }}">
+<p>{{ header_info }}</p>
 </body>
 </html>

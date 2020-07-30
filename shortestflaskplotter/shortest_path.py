@@ -1,6 +1,7 @@
 """
 This modules manages the business logic of the service. It processes the JSON files and gives the shortest path from one node to the other./
 """
+import collections
 import json
 from functools import reduce
 
@@ -42,7 +43,22 @@ class QuickWayFinder(object):
             self.node_coordinates = data["node_coordinates"]
             self.node_names = data["node_names"]
             self.weights_node_coordinates = data["weights_node_coordinates"]
-            self.node_paths = data["node_paths"]
+            self.node_paths = self.get_node_path(data)
+
+    def get_node_path(self, data):
+        """
+        This method generates the dictionary of nodes and paths to that nodes.
+
+        :param data: Dictionary with node details
+        :return: Node Paths
+        """
+        node_paths = collections.defaultdict(list)
+        for node_index, weights_of_node in enumerate(data['weights_node_coordinates']):
+            for weight_index, weights in enumerate(weights_of_node):
+                if weights and node_index != weight_index:
+                    node_paths[data["node_names"][str(node_index + 1)]].append(
+                        [data["node_names"][str(weight_index + 1)], weights])
+        return node_paths
 
     def prepare_coordinates(self):
         """
